@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+
+
+<!-- ! https://getcssscan.com/css-box-shadow-examples?ref=beautifulbuttons-bottom -->
+
+
+{% block content %}
+        <div class="bg"></div>
+        <div class="bg bg2"></div>
+        <div class="bg bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="neonText">Товары</h1>
+            </div>
+            {% for p in products %}
+            <div class="col-xs-6 col-sm-3" style="width: 354px; height: 400px;">
+                    <div class="m_item" style="padding: 0.2em; background-color: #FFFFFF; border-radius: 4px; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
+                        <div class="img-product">
+                            <img src="{{ p.photo.url }}" style="border-radius: 6px;" width="180px" alt="None" class="img-fluid">
+                        </div>
+                        <a href="{{ p.get_absolute_url }}">
+                            {% autoescape on %}
+                                <p>{{ p.description|linebreaks|truncatewords:6  }}</p>
+                            {% endautoescape %}
+                        </a>
+                        <h4 style="color: black;">{{ p.price }} ₽ </h>
+                    </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    
+    
+    <div class="pag-num">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+            {% endif %}
+
+            
+                {% for p in paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li class="page-num">{{p}}</li>
+                    {% else %}
+                        <a href="?page={{p}}">{{p}}</a>
+                    {% endif %}
+                {% endfor %}
+            
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Вперед</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+
+
+        <div style="height: 80px;"></div>
+
+
+
+{% endblock %}
+
